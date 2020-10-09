@@ -26,7 +26,7 @@ func getDefaultOp() Op {
 // and decides which operation should be taken.
 func New() *cobra.Command {
 	cmd := &cobra.Command{
-		Use: os.Args[0],
+		Use: selfName(),
 		RunE: func(cmd *cobra.Command, args []string) error {
 			//return getDefaultOp().Run(color.Output, color.Error)
 			return getDefaultOp().Run(color.Output, color.Error)
