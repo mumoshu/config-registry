@@ -118,3 +118,7 @@ Colors in the output can be disabled by setting the
 [`NO_COLOR`](http://no-color.org/) environment variable.
 
 -----
+
+# Acknowledgement
+
+The initial version of `kubeconf` codebase has been roughly 50% derived from @ahmetb's awesome [kubectx](https://github.com/ahmetb/kubectx). You can see which source files are still kept without major changes today by seeing the license header comments in the source files. A big thanks to @ahmetb and the contributors for all the hard work, and sharing it as an opensource project!
