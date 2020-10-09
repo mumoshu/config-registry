@@ -43,21 +43,28 @@ test/format:
 test/release: goreleaser
 	$(GORELEASER) release --snapshot --skip-publish --rm-dist
 
-.PHONY: test/krew
-test/krew:
+VERSION ?= v0.1.4
+
+.PHONY: test/krew-template
+test/krew-template:
 	docker run -v $(PWD)/.krew-release-bot.yaml:/tmp/template-file.yaml rajatjindal/krew-release-bot:v0.0.38 \
-	krew-release-bot template --tag v0.1.3 --template-file /tmp/template-file.yaml > .krew.yaml
+	krew-release-bot template --tag $(VERSION) --template-file /tmp/template-file.yaml > .krew.yaml
 
 .PHONY: test/krew-install
-test/krew-install: test/krew
+test/krew-install:
+	kubectl krew uninstall conf || true
 	kubectl krew install --manifest=.krew.yaml
+	kubectl krew uninstall conf
+
+.PHON: test/krew
+test/krew: test/krew-template test/krew-install
 
 .PHONY: test/go
 test/go:
 	go test ./...
 
 .PHONY: check
-check: test/format test/release test/krew test/go
+check: test/format test/release test/krew-template test/go
 
 .PHONY: build
 build:

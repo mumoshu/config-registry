@@ -38,4 +38,4 @@ spec:
         os: windows
         arch: amd64
     {{addURIAndSha "https://github.com/mumoshu/kubeconf/releases/download/{{ .TagName }}/kubeconf_{{ .TagName }}_windows_amd64.zip" .TagName }}
-    bin: kubeconf
+    bin: kubeconf.exe
