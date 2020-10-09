@@ -46,7 +46,11 @@ test/release: goreleaser
 .PHONY: test/krew
 test/krew:
 	docker run -v $(PWD)/.krew-release-bot.yaml:/tmp/template-file.yaml rajatjindal/krew-release-bot:v0.0.38 \
-	krew-release-bot template --tag v0.1.1 --template-file /tmp/template-file.yaml
+	krew-release-bot template --tag v0.1.3 --template-file /tmp/template-file.yaml > .krew.yaml
+
+.PHONY: test/krew-install
+test/krew-install: test/krew
+	kubectl krew install --manifest=.krew.yaml
 
 .PHONY: test/go
 test/go:
