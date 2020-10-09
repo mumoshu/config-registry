@@ -57,7 +57,17 @@ Switched to config "default".
 
 $ kubeconf locate prod
 $HOME/.kube/kubeconf/registry/prod
+```
 
+Switching to the production config by using `kubeconf use prod` is strongly NOT RECOMMEND.
+That's because doing so would result in future you running a disruption operation on the production cluster without noticing the current config is production.
+
+Instead, use `kubeconf locate prod`.
+
+With that you can grab the kubeconfig path without switching,
+so that you will never end up running unexpected operations in production:
+
+```
 # Avoid unintentional operation on prod by using `kubeconf locate`
 
 $ KUBECONFIG=$(kubeconf locate prod) kubectl version
