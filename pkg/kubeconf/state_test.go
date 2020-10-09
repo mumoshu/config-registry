@@ -1,6 +1,7 @@
 package kubeconf
 
 import (
+	"errors"
 	"io/ioutil"
 	"os"
 	"path/filepath"
@@ -11,9 +12,12 @@ import (
 
 func Test_readConfName_nonExistingFile(t *testing.T) {
 	s, err := readConfName(filepath.FromSlash("/non/existing/file"))
-	if err != nil {
+	if err == nil {
+		t.Fatal("missing expected error")
+	} else if !errors.Is(err, os.ErrNotExist) {
 		t.Fatal(err)
 	}
+
 	if s != "" {
 		t.Fatalf("expected empty string; got=%q", s)
 	}
