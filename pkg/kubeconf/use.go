@@ -2,7 +2,9 @@ package kubeconf
 
 import (
 	"fmt"
+	"golang.org/x/xerrors"
 	"io"
+	"io/ioutil"
 	"os"
 
 	"github.com/pkg/errors"
@@ -59,12 +61,12 @@ func switchConfig(name string) (string, error) {
 			return "", errors.Wrap(err, "determining config path")
 		}
 
-		if err := CopyFile(nextConfPath, writeConfPath); err != nil {
+		if err := hardLinkIfRegistered(nextConfPath, writeConfPath); err != nil {
 			if errors.Is(err, os.ErrNotExist) {
 				return "", fmt.Errorf("config %s does not exist", name)
 			}
 
-			return "", errors.Wrapf(err, "copying %s to %s", nextConfPath, writeConfPath)
+			return "", errors.Wrapf(err, "applying %s to %s", nextConfPath, writeConfPath)
 		}
 
 		if err := writeConfName(prevConfFile, curr); err != nil {
@@ -122,4 +124,55 @@ func CopyFile(src, dst string) (err error) {
 	err = out.Sync()
 
 	return
+}
+
+func HardLink(src, dst string) (err error) {
+	if err := os.Link(src, dst); err != nil {
+		return xerrors.Errorf("hard linking %s to %s: %w", src, dst, err)
+	}
+
+	return
+}
+
+func hardLinkIfRegistered(src, dst string) (err error) {
+	dstInfo, err := os.Stat(dst)
+	if err != nil {
+		return xerrors.Errorf("stat %s: %w", src)
+	}
+
+	registryPath, err := confRegistryPath()
+	if err != nil {
+		return xerrors.Errorf("determining config registry path: %w", err)
+	}
+
+	infos, err := ioutil.ReadDir(registryPath)
+	if err != nil {
+		return xerrors.Errorf("reading directory: %w", err)
+	}
+
+	var registered bool
+
+	for _, info := range infos {
+		if os.SameFile(dstInfo, info) {
+			registered = true
+
+			break
+		}
+	}
+
+	if !registered {
+		return fmt.Errorf("%s is not registered yet. This operation is blocked to prevent the overwriting the unregistered file. Run `import %s somename` first", dst, dst)
+	}
+
+	// It's safe to delete ~/.kube/config as it is already known to be registered to ~/.kube/kubeconf/registry
+
+	if err := os.Remove(dst); err != nil {
+		return xerrors.Errorf("removing %s: %w", dst, err)
+	}
+
+	if err := HardLink(src, dst); err != nil {
+		return xerrors.Errorf("switching to %s: %w", dst, err)
+	}
+
+	return nil
 }

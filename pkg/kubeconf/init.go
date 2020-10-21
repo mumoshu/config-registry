@@ -66,7 +66,7 @@ func importConf(kubeconfigPath, confName string) error {
 		return errors.Wrapf(err, "initializing %s", regPath)
 	}
 
-	if err := CopyFile(kubeconfigPath, defaultPath); err != nil {
+	if err := HardLink(kubeconfigPath, defaultPath); err != nil {
 		return errors.Wrapf(err, "copying %s to %s", kubeconfigPath, defaultPath)
 	}
 
