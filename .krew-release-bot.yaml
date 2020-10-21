@@ -1,7 +1,7 @@
 apiVersion: krew.googlecontainertools.github.com/v1alpha2
 kind: Plugin
 metadata:
-  name: conf-registry
+  name: config-registry
 spec:
   homepage: https://github.com/mumoshu/kubeconf
   shortDescription: Switch between your kubeconfigs
