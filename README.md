@@ -60,7 +60,7 @@ $HOME/.kube/kubeconf/registry/prod
 ```
 
 Switching to the production config by using `config-registry use prod` is strongly NOT RECOMMEND.
-That's because doing so would result in future you running a disruption operation on the production cluster without noticing the current config is production.
+That's because doing so may result in you running a disruptive operation on the production cluster without noticing the current config is production.
 
 Instead, use `config-registry locate prod`.
 
