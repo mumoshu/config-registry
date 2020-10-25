@@ -3,7 +3,7 @@ kind: Plugin
 metadata:
   name: config-registry
 spec:
-  homepage: https://github.com/mumoshu/kubeconf
+  homepage: https://github.com/mumoshu/config-registry
   shortDescription: Switch between registered kubeconfigs
   version: {{ .TagName }}
   description: |
@@ -28,23 +28,23 @@ spec:
       matchLabels:
         os: darwin
         arch: amd64
-    {{addURIAndSha "https://github.com/mumoshu/kubeconf/releases/download/{{ .TagName }}/kubeconf_{{ .TagName }}_darwin_amd64.tar.gz" .TagName }}
-    bin: kubeconf
+    {{addURIAndSha "https://github.com/mumoshu/config-registry/releases/download/{{ .TagName }}/config-registry_{{ .TagName }}_darwin_amd64.tar.gz" .TagName }}
+    bin: config-registry
   - selector:
       matchLabels:
         os: linux
         arch: amd64
-    {{addURIAndSha "https://github.com/mumoshu/kubeconf/releases/download/{{ .TagName }}/kubeconf_{{ .TagName }}_linux_amd64.tar.gz" .TagName }}
-    bin: kubeconf
+    {{addURIAndSha "https://github.com/mumoshu/config-registry/releases/download/{{ .TagName }}/config-registry_{{ .TagName }}_linux_amd64.tar.gz" .TagName }}
+    bin: config-registry
   - selector:
       matchLabels:
         os: linux
         arch: arm64
-    {{addURIAndSha "https://github.com/mumoshu/kubeconf/releases/download/{{ .TagName }}/kubeconf_{{ .TagName }}_linux_arm64.tar.gz" .TagName }}
-    bin: kubeconf
+    {{addURIAndSha "https://github.com/mumoshu/config-registry/releases/download/{{ .TagName }}/config-registry_{{ .TagName }}_linux_arm64.tar.gz" .TagName }}
+    bin: config-registry
   - selector:
       matchLabels:
         os: windows
         arch: amd64
-    {{addURIAndSha "https://github.com/mumoshu/kubeconf/releases/download/{{ .TagName }}/kubeconf_{{ .TagName }}_windows_amd64.zip" .TagName }}
-    bin: kubeconf.exe
+    {{addURIAndSha "https://github.com/mumoshu/config-registry/releases/download/{{ .TagName }}/config-registry_{{ .TagName }}_windows_amd64.zip" .TagName }}
+    bin: config-registry.exe

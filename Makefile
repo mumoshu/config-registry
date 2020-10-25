@@ -52,9 +52,9 @@ test/krew-template:
 
 .PHONY: test/krew-install
 test/krew-install:
-	kubectl krew uninstall conf || true
+	kubectl krew uninstall config-registry || true
 	kubectl krew install --manifest=.krew.yaml
-	kubectl krew uninstall conf
+	kubectl krew uninstall config-registry
 
 .PHON: test/krew
 test/krew: test/krew-template test/krew-install
@@ -68,4 +68,4 @@ check: test/format test/release test/krew-template test/go
 
 .PHONY: build
 build:
-	go build ./cmd/kubeconf
+	go build ./cmd/config-registry

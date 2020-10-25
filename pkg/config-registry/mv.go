@@ -1,11 +1,11 @@
-package kubeconf
+package config_registry
 
 import (
 	"github.com/pkg/errors"
 	"io"
 	"os"
 
-	"github.com/mumoshu/kubeconf/internal/printer"
+	"github.com/mumoshu/config-registry/internal/printer"
 )
 
 // RenameOp indicates intention to rename contexts.

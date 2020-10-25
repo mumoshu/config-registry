@@ -1,11 +1,11 @@
-project_name: kubeconf
+project_name: config-registry
 before:
   hooks:
     - go mod download
 builds:
-- id: kubeconf
-  main: ./cmd/kubeconf
-  binary: kubeconf
+- id: config-registry
+  main: ./cmd/config-registry
+  binary: config-registry
   env:
   - CGO_ENABLED=0
   goos:
@@ -19,16 +19,16 @@ builds:
     - ppc64le
   goarm: [6, 7]
 archives:
-- id: kubeconf-archive
+- id: config-registry-archive
   name_template: |-
-    kubeconf_{{ .Tag }}_{{ .Os }}_{{ .Arch -}}
+    config-registry_{{ .Tag }}_{{ .Os }}_{{ .Arch -}}
     {{- with .Arm -}}
       {{- if (eq . "6") -}}hf
       {{- else -}}v{{- . -}}
       {{- end -}}
     {{- end -}}
   builds:
-    - kubeconf
+    - config-registry
   format_overrides:
     - goos: windows
       format: zip

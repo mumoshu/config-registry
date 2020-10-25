@@ -1,8 +1,8 @@
-package kubeconf
+package config_registry
 
 import (
 	"github.com/fatih/color"
-	"github.com/mumoshu/kubeconf/internal/cmdutil"
+	"github.com/mumoshu/config-registry/internal/cmdutil"
 	"github.com/spf13/cobra"
 	"io"
 	"os"
@@ -37,8 +37,8 @@ func New() *cobra.Command {
 	cmd.AddCommand(
 		&cobra.Command{
 			Use:   "init",
-			Short: "initialize kubeconf",
-			Long:  "Initialize kubeconf by importing the current kubeconfig as the 'default' config",
+			Short: "initialize config-registry",
+			Long:  "Initialize config-registry by importing the current kubeconfig as the 'default' config",
 			Args:  cobra.NoArgs,
 			RunE: func(cmd *cobra.Command, args []string) error {
 				return InitOp{}.Run(color.Output, color.Error)

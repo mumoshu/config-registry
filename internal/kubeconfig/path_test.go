@@ -20,7 +20,7 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/mumoshu/kubeconf/internal/testutil"
+	"github.com/mumoshu/config-registry/internal/testutil"
 )
 
 func Test_kubeconfigPath(t *testing.T) {

@@ -1,4 +1,4 @@
-package kubeconf
+package config_registry
 
 import (
 	"errors"
@@ -7,7 +7,7 @@ import (
 	"path/filepath"
 	"testing"
 
-	"github.com/mumoshu/kubeconf/internal/testutil"
+	"github.com/mumoshu/config-registry/internal/testutil"
 )
 
 func Test_readConfName_nonExistingFile(t *testing.T) {

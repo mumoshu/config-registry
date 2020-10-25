@@ -1,4 +1,4 @@
-package kubeconf
+package config_registry
 
 import (
 	"fmt"
@@ -7,7 +7,7 @@ import (
 
 	"github.com/pkg/errors"
 
-	"github.com/mumoshu/kubeconf/internal/printer"
+	"github.com/mumoshu/config-registry/internal/printer"
 )
 
 // DeleteOp indicates intention to delete contexts.

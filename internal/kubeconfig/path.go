@@ -15,7 +15,7 @@
 package kubeconfig
 
 import (
-	"github.com/mumoshu/kubeconf/internal/cmdutil"
+	"github.com/mumoshu/config-registry/internal/cmdutil"
 	"github.com/pkg/errors"
 	"os"
 	"path/filepath"

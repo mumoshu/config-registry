@@ -20,7 +20,7 @@ import (
 
 	"github.com/mattn/go-isatty"
 
-	"github.com/mumoshu/kubeconf/internal/env"
+	"github.com/mumoshu/config-registry/internal/env"
 )
 
 // isTerminal determines if given fd is a TTY.

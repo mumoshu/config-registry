@@ -1,4 +1,4 @@
-package kubeconf
+package config_registry
 
 import (
 	"fmt"

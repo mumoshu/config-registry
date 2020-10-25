@@ -17,7 +17,7 @@ package cmdutil
 import (
 	"testing"
 
-	"github.com/mumoshu/kubeconf/internal/testutil"
+	"github.com/mumoshu/config-registry/internal/testutil"
 )
 
 func Test_homeDir(t *testing.T) {

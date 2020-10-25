@@ -1,13 +1,13 @@
 Usage:
-  kubeconf [flags]
-  kubeconf [command]
+  config-registry [flags]
+  config-registry [command]
 
 Available Commands:
   cp          copy config OLD to NEW
   current     show the current config name
   help        Help about any command
   import      import existing kubeconfig at PATH as NAME
-  init        initialize kubeconf
+  init        initialize config-registry
   locate      print the path to config NAME
   ls          list the configs
   mv          rename config OLD to NEW
@@ -15,6 +15,6 @@ Available Commands:
   use         switch to config NAME
 
 Flags:
-  -h, --help   help for kubeconf
+  -h, --help   help for config-registry
 
-Use "kubeconf [command] --help" for more information about a command.
+Use "config-registry [command] --help" for more information about a command.

@@ -1,4 +1,4 @@
 /dist
 /gofmt.out
-/kubeconf
+/config-registry
 /.idea

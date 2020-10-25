@@ -1,4 +1,4 @@
-package kubeconf
+package config_registry
 
 import (
 	"fmt"
@@ -9,8 +9,8 @@ import (
 
 	"github.com/pkg/errors"
 
-	"github.com/mumoshu/kubeconf/internal/kubeconfig"
-	"github.com/mumoshu/kubeconf/internal/printer"
+	"github.com/mumoshu/config-registry/internal/kubeconfig"
+	"github.com/mumoshu/config-registry/internal/printer"
 )
 
 // SwitchOp indicates intention to switch contexts.
@@ -61,11 +61,11 @@ func switchConfig(name string) (string, error) {
 			return "", errors.Wrap(err, "determining config path")
 		}
 
-		if err := hardLinkIfRegistered(nextConfPath, writeConfPath); err != nil {
-			if errors.Is(err, os.ErrNotExist) {
-				return "", fmt.Errorf("config %s does not exist", name)
-			}
+		if _, err := os.Stat(nextConfPath); os.IsNotExist(err) {
+			return "", fmt.Errorf("config %s does not exist", name)
+		}
 
+		if err := hardLinkIfRegistered(nextConfPath, writeConfPath); err != nil {
 			return "", errors.Wrapf(err, "applying %s to %s", nextConfPath, writeConfPath)
 		}
 
@@ -127,6 +127,10 @@ func CopyFile(src, dst string) (err error) {
 }
 
 func HardLink(src, dst string) (err error) {
+	if _, err := os.Stat(src); os.IsNotExist(err) {
+		return xerrors.Errorf("open %s: no such file or directory", src)
+	}
+
 	if err := os.Link(src, dst); err != nil {
 		return xerrors.Errorf("hard linking %s to %s: %w", src, dst, err)
 	}

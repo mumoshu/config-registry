@@ -1,4 +1,4 @@
-package kubeconf
+package config_registry
 
 import (
 	"io/ioutil"
@@ -7,7 +7,7 @@ import (
 
 	"github.com/pkg/errors"
 
-	"github.com/mumoshu/kubeconf/internal/cmdutil"
+	"github.com/mumoshu/config-registry/internal/cmdutil"
 )
 
 func kubeconfPrevConfFile() (string, error) {

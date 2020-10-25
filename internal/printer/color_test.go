@@ -19,7 +19,7 @@ import (
 
 	"github.com/google/go-cmp/cmp"
 
-	"github.com/mumoshu/kubeconf/internal/testutil"
+	"github.com/mumoshu/config-registry/internal/testutil"
 )
 
 var (
@@ -27,7 +27,7 @@ var (
 )
 
 func Test_useColors_forceColors(t *testing.T) {
-	defer testutil.WithEnvVar("_KUBECONF_FORCE_COLOR", "1")()
+	defer testutil.WithEnvVar("_CONFIG_REGISTRY_FORCE_COLOR", "1")()
 	defer testutil.WithEnvVar("NO_COLOR", "1")()
 
 	if v := useColors(); !cmp.Equal(v, &tr) {
@@ -45,7 +45,7 @@ func Test_useColors_disableColors(t *testing.T) {
 
 func Test_useColors_default(t *testing.T) {
 	defer testutil.WithEnvVar("NO_COLOR", "")()
-	defer testutil.WithEnvVar("_KUBECONF_FORCE_COLOR", "")()
+	defer testutil.WithEnvVar("_CONFIG_REGISTRY_FORCE_COLOR", "")()
 
 	if v := useColors(); v != nil {
 		t.Fatalf("expected useColors() = nil; got=%v", *v)

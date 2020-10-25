@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package kubeconf
+package config_registry
 
 import (
 	"bytes"
@@ -24,8 +24,8 @@ import (
 
 	"github.com/pkg/errors"
 
-	"github.com/mumoshu/kubeconf/internal/env"
-	"github.com/mumoshu/kubeconf/internal/printer"
+	"github.com/mumoshu/config-registry/internal/env"
+	"github.com/mumoshu/config-registry/internal/printer"
 )
 
 type InteractiveSwitchOp struct {

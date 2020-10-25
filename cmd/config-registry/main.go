@@ -2,16 +2,16 @@ package main
 
 import (
 	"fmt"
-	"github.com/mumoshu/kubeconf/pkg/kubeconf"
+	config_registry "github.com/mumoshu/config-registry/pkg/config-registry"
 	"os"
 
 	"github.com/fatih/color"
-	"github.com/mumoshu/kubeconf/internal/env"
-	"github.com/mumoshu/kubeconf/internal/printer"
+	"github.com/mumoshu/config-registry/internal/env"
+	"github.com/mumoshu/config-registry/internal/printer"
 )
 
 func main() {
-	cmd := kubeconf.New()
+	cmd := config_registry.New()
 	cmd.SetArgs(os.Args[1:])
 
 	// Instead of letting cobra print the error, we do our own by using printer.Error below.

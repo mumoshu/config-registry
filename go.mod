@@ -1,4 +1,4 @@
-module github.com/mumoshu/kubeconf
+module github.com/mumoshu/config-registry
 
 go 1.14
 

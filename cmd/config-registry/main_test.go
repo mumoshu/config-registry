@@ -6,7 +6,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"github.com/google/go-cmp/cmp"
-	"github.com/mumoshu/kubeconf/pkg/kubeconf"
+	config_registry "github.com/mumoshu/config-registry/pkg/config-registry"
 	"io/ioutil"
 	"net"
 	"net/http"
@@ -36,7 +36,7 @@ type cond struct {
 	env            []string
 }
 
-func TestKubeconfMain(t *testing.T) {
+func TestConfigRegistryMain(t *testing.T) {
 	if os.Getenv(VarRunMainForTesting) == "1" {
 		args := envToArgs(os.Environ())
 
@@ -57,13 +57,13 @@ func TestKubeconfMain(t *testing.T) {
 	}
 
 	runCheck(t, "-h should not fail", cond{
-		args:           []string{"kubeconf", "-h"},
+		args:           []string{"config-registry", "-h"},
 		wantExitCode:   0,
 		wantStdoutFile: "testdata/help",
 	})
 
 	runCheck(t, "help should not fail", cond{
-		args:           []string{"kubeconf", "help"},
+		args:           []string{"config-registry", "help"},
 		wantExitCode:   0,
 		wantStdoutFile: "testdata/help",
 	})
@@ -74,33 +74,33 @@ func TestKubeconfMain(t *testing.T) {
 		homeEnv := "HOME=" + dir
 
 		check(t, cond{
-			args:         []string{"kubeconf", "current"},
+			args:         []string{"config-registry", "current"},
 			env:          []string{homeEnv},
 			wantStderr:   "error: current config is not set. please run `init`\n",
 			wantExitCode: 1,
 		})
 
 		check(t, cond{
-			args:         []string{"kubeconf", "ls"},
+			args:         []string{"config-registry", "ls"},
 			env:          []string{homeEnv},
 			wantStderr:   "error: open " + dir + "/.kube/kubeconf/registry: no such file or directory\n",
 			wantExitCode: 1,
 		})
 
 		check(t, cond{
-			args:         []string{"kubeconf", "init"},
+			args:         []string{"config-registry", "init"},
 			env:          []string{homeEnv},
 			wantExitCode: 1,
 			wantStderr:   "error: copying " + dir + "/.kube/config to " + dir + "/.kube/kubeconf/registry/default: open " + dir + "/.kube/config: no such file or directory\n",
 		})
 
-		if err := kubeconf.CopyFile("testdata/config1", filepath.Join(dir, ".kube", "config")); err != nil {
+		if err := config_registry.CopyFile("testdata/config1", filepath.Join(dir, ".kube", "config")); err != nil {
 			t.Fatal(err)
 		}
 
 		traces := withTracing(t, func(url string) {
 			check(t, cond{
-				args:         []string{"kubeconf", "init"},
+				args:         []string{"config-registry", "init"},
 				env:          []string{homeEnv, TraceServerURLEnv + "=" + url},
 				wantExitCode: 0,
 				wantStderr:   "✔ Config default created.\n",
@@ -114,53 +114,53 @@ func TestKubeconfMain(t *testing.T) {
 		checkFileContentEquality(t, "testdata/config1", filepath.Join(dir, ".kube/config"))
 
 		check(t, cond{
-			args:       []string{"kubeconf", "ls"},
+			args:       []string{"config-registry", "ls"},
 			env:        []string{homeEnv},
 			wantStdout: "default\n",
 		})
 
 		check(t, cond{
-			args:         []string{"kubeconf", "import", "testdata/invalid", "config2"},
+			args:         []string{"config-registry", "import", "testdata/invalid", "config2"},
 			env:          []string{homeEnv},
 			wantStderr:   "error: copying testdata/invalid to " + dir + "/.kube/kubeconf/registry/config2: open testdata/invalid: no such file or directory\n",
 			wantExitCode: 1,
 		})
 
 		check(t, cond{
-			args:         []string{"kubeconf", "locate", "config2"},
+			args:         []string{"config-registry", "locate", "config2"},
 			env:          []string{homeEnv},
 			wantStderr:   "error: config config2 does not exist\n",
 			wantExitCode: 1,
 		})
 
 		check(t, cond{
-			args:         []string{"kubeconf", "import", "testdata/config2", "config2"},
+			args:         []string{"config-registry", "import", "testdata/config2", "config2"},
 			env:          []string{homeEnv},
 			wantStderr:   "✔ Config config2 created.\n",
 			wantExitCode: 0,
 		})
 
 		check(t, cond{
-			args:         []string{"kubeconf", "locate", "config2"},
+			args:         []string{"config-registry", "locate", "config2"},
 			env:          []string{homeEnv},
 			wantStdout:   dir + "/.kube/kubeconf/registry/config2",
 			wantExitCode: 0,
 		})
 
 		check(t, cond{
-			args:       []string{"kubeconf", "ls"},
+			args:       []string{"config-registry", "ls"},
 			env:        []string{homeEnv},
 			wantStdout: "config2\ndefault\n",
 		})
 
 		check(t, cond{
-			args:       []string{"kubeconf", "current"},
+			args:       []string{"config-registry", "current"},
 			env:        []string{homeEnv},
 			wantStdout: "default\n",
 		})
 
 		check(t, cond{
-			args:         []string{"kubeconf", "use", "invalid"},
+			args:         []string{"config-registry", "use", "invalid"},
 			env:          []string{homeEnv},
 			wantStderr:   "error: failed to switch config: config invalid does not exist\n",
 			wantExitCode: 1,
@@ -169,7 +169,7 @@ func TestKubeconfMain(t *testing.T) {
 		checkFileContentEquality(t, "testdata/config1", filepath.Join(dir, ".kube/config"))
 
 		check(t, cond{
-			args:         []string{"kubeconf", "use", "config2"},
+			args:         []string{"config-registry", "use", "config2"},
 			env:          []string{homeEnv},
 			wantStderr:   "✔ Switched to config \"config2\".\n",
 			wantExitCode: 0,
@@ -302,11 +302,11 @@ func checkAll(t *testing.T, commands []cond) {
 func check(t *testing.T, tc cond) {
 	t.Helper()
 
-	// Do a second run of this specific test(TestKubeconfMain) with RUN_MAIN_FOR_TESTING=1 set,
+	// Do a second run of this specific test(TestConfigRegistryMain) with RUN_MAIN_FOR_TESTING=1 set,
 	// So that the second run is able to run main() and this first run can verify the exit status returned by that.
 	//
 	// This technique originates from https://talks.golang.org/2014/testing.slide#23.
-	cmd := exec.Command(os.Args[0], "-test.run=TestKubeconfMain")
+	cmd := exec.Command(os.Args[0], "-test.run=TestConfigRegistryMain")
 	cmd.Env = append(
 		cmd.Env,
 		os.Environ()...,

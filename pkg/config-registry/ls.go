@@ -1,4 +1,4 @@
-package kubeconf
+package config_registry
 
 import (
 	"fmt"
@@ -7,7 +7,7 @@ import (
 	"facette.io/natsort"
 	"github.com/pkg/errors"
 
-	"github.com/mumoshu/kubeconf/internal/printer"
+	"github.com/mumoshu/config-registry/internal/printer"
 )
 
 // ListOp describes listing contexts.

@@ -19,7 +19,7 @@ import (
 
 	"github.com/fatih/color"
 
-	"github.com/mumoshu/kubeconf/internal/env"
+	"github.com/mumoshu/config-registry/internal/env"
 )
 
 var (

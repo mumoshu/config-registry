@@ -1,4 +1,4 @@
-package kubeconf
+package config_registry
 
 import (
 	"os"
@@ -13,5 +13,5 @@ func selfName() string {
 	if strings.HasPrefix(me, pluginPrefix) {
 		return "kubectl " + strings.TrimPrefix(me, pluginPrefix)
 	}
-	return "kubeconf"
+	return "config-registry"
 }

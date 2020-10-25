@@ -1,7 +1,7 @@
-package kubeconf
+package config_registry
 
 import (
-	"github.com/mumoshu/kubeconf/internal/printer"
+	"github.com/mumoshu/config-registry/internal/printer"
 	"io"
 )
 
