@@ -4,16 +4,25 @@ metadata:
   name: config-registry
 spec:
   homepage: https://github.com/mumoshu/kubeconf
-  shortDescription: Switch between your kubeconfigs
+  shortDescription: Switch between registered kubeconfigs
   version: {{ .TagName }}
   description: |
-    Also known as "kubeconf", a utility to switch between kubeconfigs stored in your local filesystem.
+    Switch between kubeconfigs stored in your local filesystem.
     Similar to "ctx" and "ns", but for switching the whole kubeconfig.
+
+    The recommended workflow is as follows:
+
+    - Run `init` to set up the registry at `~/.kube/registry`.
+      The registry is where all the registered kubeconfigs will be stored.
+      On `init`, the default kubeconfig is imported as `default`.
+    - Register more kubeconfigs with `import`. `import PATH NAME` registers the
+      kubeconfig at PATH as NAME
+    - Run `ls` to list all the registered configs
+    - Run `use NAME` to switch to the kubeconfig by name
   caveats: |
     If fzf is installed on your machine, you can interactively choose
     between the entries using the arrow keys, or by fuzzy searching
     as you type.
-    See https://github.com/mumoshu/kubeconf for customization and details.
   platforms:
   - selector:
       matchLabels:
