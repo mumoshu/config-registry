@@ -43,7 +43,7 @@ test/format:
 test/release: goreleaser
 	$(GORELEASER) release --snapshot --skip-publish --rm-dist
 
-VERSION ?= v0.1.4
+VERSION ?= v0.2.1
 
 .PHONY: test/krew-template
 test/krew-template:
