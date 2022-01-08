@@ -23,12 +23,18 @@ spec:
     If fzf is installed on your machine, you can interactively choose
     between the entries using the arrow keys, or by fuzzy searching
     as you type.
-  platforms: darwin/arm64
+  platforms:
   - selector:
       matchLabels:
         os: darwin
         arch: amd64
     {{addURIAndSha "https://github.com/mumoshu/config-registry/releases/download/{{ .TagName }}/config-registry_{{ .TagName }}_darwin_amd64.tar.gz" .TagName }}
+    bin: config-registry
+  - selector:
+      matchLabels:
+        os: darwin
+        arch: arm64
+    {{addURIAndSha "https://github.com/mumoshu/config-registry/releases/download/{{ .TagName }}/config-registry_{{ .TagName }}_darwin_arm64.tar.gz" .TagName }}
     bin: config-registry
   - selector:
       matchLabels:
