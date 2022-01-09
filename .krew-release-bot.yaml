@@ -32,6 +32,12 @@ spec:
     bin: config-registry
   - selector:
       matchLabels:
+        os: darwin
+        arch: arm64
+    {{addURIAndSha "https://github.com/mumoshu/config-registry/releases/download/{{ .TagName }}/config-registry_{{ .TagName }}_darwin_arm64.tar.gz" .TagName }}
+    bin: config-registry
+  - selector:
+      matchLabels:
         os: linux
         arch: amd64
     {{addURIAndSha "https://github.com/mumoshu/config-registry/releases/download/{{ .TagName }}/config-registry_{{ .TagName }}_linux_amd64.tar.gz" .TagName }}
